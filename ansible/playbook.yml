@@ -1,0 +1,13 @@
+---
+# Full playbook. The tags let you run one role at a time, as in the TD steps:
+#   ansible-playbook playbook.yml --tags prereq      (step 7)
+#   ansible-playbook playbook.yml --tags prereq,k3s  (step 8)
+#   ansible-playbook playbook.yml                    (step 9 and the idempotence run)
+- name: Configurer la VM K3s
+  hosts: k3s
+  gather_facts: true
+
+  roles:
+    - { role: k3s-prereq, tags: [prereq] }
+    - { role: k3s, tags: [k3s] }
+    - { role: kubeconfig, tags: [kubeconfig] }
