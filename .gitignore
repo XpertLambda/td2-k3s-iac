@@ -11,7 +11,7 @@ crash.log
 inventory.ini
 
 # Kubernetes
-kubeconfig
+/ansible/kubeconfig
 *.kubeconfig
 
 # Local helpers and transcripts

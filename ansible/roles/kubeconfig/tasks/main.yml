@@ -1,0 +1,22 @@
+---
+# Fetch the K3s kubeconfig onto the DevStack host.
+#
+# DEVIATION FROM THE PDF (documented in the README): the PDF rewrites 127.0.0.1 to the
+# floating IP and then asks to sed it back to 127.0.0.1 for the SSH tunnel. That makes
+# the next playbook run report changed=1 and re-break kubectl. K3s already writes
+# "server: https://127.0.0.1:6443", which is exactly what the tunnel needs, so the file
+# is copied unchanged and the role stays idempotent.
+
+- name: Lire le kubeconfig depuis la VM
+  ansible.builtin.slurp:
+    src: /etc/rancher/k3s/k3s.yaml
+  register: kubeconfig_raw
+  become: true
+
+- name: Ecrire le kubeconfig sur DevStack (server = 127.0.0.1, pour le tunnel SSH)
+  ansible.builtin.copy:
+    dest: "{{ playbook_dir }}/kubeconfig"
+    content: "{{ kubeconfig_raw.content | b64decode }}"
+    mode: '0600'
+  delegate_to: localhost
+  become: false
