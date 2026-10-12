@@ -60,3 +60,8 @@ Helper scripts are in `scripts/` (validation, idempotence proof, destruction) an
 visit-counter exercise is in `bonus/`.
 
 Never commit `terraform.tfstate`, `terraform.tfvars` or `kubeconfig` (see `.gitignore`).
+
+## Bonus: visit counter
+- `bonus/migration.sql` creates the `visits` table (applied with `psql`, because `init.sql` only runs on a fresh volume).
+- The backend exposes `/api/visits` (one row per call) and the frontend shows a "Visites totales" card.
+- `helm upgrade` deployed it (revision 3 of the backend); `helm rollback` restored the previous version (revision 4), and `/api/visits` returned 404 again.
