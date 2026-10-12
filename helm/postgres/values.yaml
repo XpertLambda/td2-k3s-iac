@@ -1,0 +1,21 @@
+image:
+  repository: postgres
+  tag: "16-alpine"
+
+# Plain-text password: accepted in this isolated lab (see TD3 for secret handling).
+auth:
+  username: app
+  password: changeme
+  database: appdb
+
+storage:
+  size: 1Gi
+  storageClass: local-path
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS visits (
+  id SERIAL PRIMARY KEY,
+  pod_name TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);

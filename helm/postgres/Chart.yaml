@@ -1,0 +1,6 @@
+apiVersion: v2
+name: postgres
+description: PostgreSQL 16 as a StatefulSet with a PVC (NovaShop database tier)
+type: application
+version: 0.1.0
+appVersion: "16"
