@@ -24,6 +24,7 @@ data:
                 box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #1950a0; }
         .card.backend { border-left-color: #e6781e; }
         .card.db { border-left-color: #1e8c46; }
+        .card.visits { border-left-color: #6e3c96; }
         .card-label { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.05em;
                       color: #6b7280; margin-bottom: 0.3em; }
         .card-value { font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -67,6 +68,10 @@ data:
             <div class="card-label">Base de donnees</div>
             <div class="card-value">PostgreSQL 16</div>
           </div>
+          <div class="card visits">
+            <div class="card-label">Visites totales</div>
+            <div class="card-value" id="visits">-</div>
+          </div>
         </div>
 
         <table>
@@ -104,6 +109,10 @@ data:
             document.getElementById('status').innerHTML = '&#9679; En ligne';
             document.getElementById('status').style.background = '#d1fae5';
             document.getElementById('status').style.color = '#065f46';
+
+            const visitResp = await fetch('/api/visits?cachebust=' + Date.now());
+            const visitData = await visitResp.json();
+            document.getElementById('visits').textContent = visitData.total_visits;
           } catch (e) {
             document.getElementById('status').innerHTML = '&#9679; Hors ligne';
             document.getElementById('status').style.background = '#fee2e2';
